@@ -6,6 +6,8 @@ import mongoose from 'mongoose'
 import { registerValidator } from './validations/auth.js'
 import { validationResult } from 'express-validator'
 
+import checkAuth from './utils/checkAuth.js'
+
 import UserModel from './models/User.js'
 
 mongoose
@@ -110,6 +112,14 @@ app.post('/register', registerValidator, async (req, res) => {
 			message: 'Регистрация не прошла успешно!!!',
 		})
 	}
+})
+
+app.get('/profile', checkAuth, async (req, res) => {
+	try {
+		const user = await UserModel.findById(req.userId)
+
+		
+	} catch (err) {}
 })
 
 app.listen(3001, err => {
